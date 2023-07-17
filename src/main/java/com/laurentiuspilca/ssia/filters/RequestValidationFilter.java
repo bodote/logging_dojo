@@ -3,23 +3,28 @@ package com.laurentiuspilca.ssia.filters;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
 
-public class RequestValidationFilter implements Filter {
+public class RequestValidationFilter extends OncePerRequestFilter {
 
     @Override
-    public void doFilter(ServletRequest request,
-                         ServletResponse response,
-                         FilterChain filterChain) throws IOException, ServletException {
-        var httpRequest = (HttpServletRequest) request;
-        var httpResponse = (HttpServletResponse) response;
+    public void doFilterInternal(HttpServletRequest httpRequest, HttpServletResponse httpResponse, FilterChain filterChain) throws IOException, ServletException {
+
+        if ( httpRequest.getRequestURI().startsWith("/error")){
+            filterChain.doFilter(httpRequest, httpResponse);
+        }
         String requestId = httpRequest.getHeader("Request-Id");
         if (requestId == null || requestId.isBlank()) {
-            httpResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
+//            httpResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            return;
+           throw new AuthenticationException("no Request-Id header found");
         }
 
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(httpRequest, httpResponse);
     }
+
+
 }

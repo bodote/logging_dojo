@@ -1,0 +1,21 @@
+<configuration debug="true" scan="true" scanPeriod="3 seconds">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+
+    <springProfile name="staging">
+
+        <!-- configuration to be enabled when the "staging" profile is active -->
+    </springProfile>
+
+    <springProfile name="dev | staging">
+        <!-- configuration to be enabled when the "dev" or "staging" profiles are active -->
+    </springProfile>
+
+    <springProfile name="!production">
+        <root level="INFO">
+           <appender-ref ref="CONSOLE" />
+        </root>
+        <logger name="org.springframework.web" level="DEBUG"/>
+    </springProfile>
+</configuration>
