@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
+        <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.laurentiuspilca</groupId>
@@ -56,7 +56,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <!--for openapi-generator-maven-plugin: -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>2.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -125,6 +140,33 @@
                                     </limits>
                                 </rule>
                             </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>6.6.0</version> <!-- Please use the latest version -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi.yaml
+                            </inputSpec> <!-- Path to your OpenAPI file/Users/bodo.teichmann/dev/learning/spring-security-2nd-edition-meap/ssia-ch5-ex1.final/src/main/resources/openapi.yaml -->
+                            <generatorName>spring</generatorName>
+                            <apiPackage>com.laurentiuspilca.ssia.controllers</apiPackage> <!-- Your API package -->
+                            <modelPackage>com.laurentiuspilca.ssia.model</modelPackage> <!-- Your model package -->
+                            <configOptions>
+                                <generatorName>java</generatorName>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useJakartaEe>true</useJakartaEe>
+                                <sourceFolder>src/gen/java/main</sourceFolder>
+
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>

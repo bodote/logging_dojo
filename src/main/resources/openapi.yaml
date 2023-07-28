@@ -1,0 +1,50 @@
+openapi: 3.0.3
+info:
+  version: "1.0.0"
+  title: "Simple API"
+
+servers:
+  - url: "http://localhost:8080"
+
+paths:
+  /api/v1/mypath:
+    get:
+      summary: "Retrieve some resource"
+      operationId: "getResource"
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+    post:
+      summary: "Create a new resource"
+      operationId: "createResource"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: "Resource successfully created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+
