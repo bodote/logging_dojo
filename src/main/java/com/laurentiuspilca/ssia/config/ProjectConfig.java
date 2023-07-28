@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class ProjectConfig implements WebMvcConfigurer {
 
   private final LoggingInterceptor loggingInterceptor;
-  @Value("${spring.websecurity.debug:true}")
+  @Value("${spring.websecurity.debug:false}")
   boolean webSecurityDebug;
 
   @Autowired
@@ -45,7 +45,7 @@ public class ProjectConfig implements WebMvcConfigurer {
     return http.build();
   }
 
-  @Bean
+  //@Bean
   public CommonsRequestLoggingFilter logFilter() {
     CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
     filter.setIncludeQueryString(true);

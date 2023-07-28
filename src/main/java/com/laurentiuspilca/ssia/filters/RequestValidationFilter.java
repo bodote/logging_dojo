@@ -18,9 +18,9 @@ public class RequestValidationFilter extends OncePerRequestFilter {
         }
         String requestId = httpRequest.getHeader("Request-Id");
         if (requestId == null || requestId.isBlank()) {
-//            httpResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            return;
-           throw new AuthenticationException("no Request-Id header found");
+            httpResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+           //throw new AuthenticationException("no Request-Id header found");
         }
 
         filterChain.doFilter(httpRequest, httpResponse);
